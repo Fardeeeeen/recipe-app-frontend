@@ -1,3 +1,12 @@
 {
+  "/_not-found/page": "app/_not-found/page.js",
+  "/contact/page": "app/contact/page.js",
+  "/forgot-password/page": "app/forgot-password/page.js",
+  "/favorites/page": "app/favorites/page.js",
+  "/login/page": "app/login/page.js",
+  "/recent-searches/page": "app/recent-searches/page.js",
+  "/recipe/[id]/page": "app/recipe/[id]/page.js",
+  "/signup/page": "app/signup/page.js",
+  "/reset-password/page": "app/reset-password/page.js",
   "/page": "app/page.js"
 }
