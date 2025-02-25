@@ -1,12 +1,15 @@
 "use client";
 
+
+export const dynamic = "force-dynamic";
+
 import { Suspense, useState, useEffect } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import Header from "@/components/header";
 import { SearchBar } from "@/components/search-bar";
 import CategorySlider from "@/components/CategorySlider";
 import { RecipeGrid } from "@/components/recipe-grid";
-import Loader from "../components/loader";
+import Loader from "@/components/loader";
 import Modal from "@/components/Modal";
 import PrivacyModalContent from "@/components/PrivacyModalContent";
 import TermsModalContent from "@/components/TermsModalContent";
@@ -36,12 +39,12 @@ function HomeContent() {
     const token = localStorage.getItem("token");
     setIsLoggedIn(!!token);
 
-    // First, check for a free-text search query ("q") in the URL.
+    // Check for free-text search query ("q") in the URL.
     const searchQuery = searchParams.get("q");
     if (searchQuery) {
       handleSearch(searchQuery);
     } else {
-      // Otherwise, check if there's a category query.
+      // Otherwise, check for a category query.
       const categoryQuery = searchParams.get("category");
       if (categoryQuery) {
         handleCategorySelect(categoryQuery);
@@ -69,7 +72,6 @@ function HomeContent() {
     }
   };
 
-  // Callback for free-text search.
   const handleSearch = async (query: string) => {
     router.push(`/?q=${encodeURIComponent(query)}`);
     setLoading(true);
@@ -92,7 +94,6 @@ function HomeContent() {
     }
   };
 
-  // Callback when a category is selected.
   const handleCategorySelect = async (category: string) => {
     router.push(`/?category=${encodeURIComponent(category.toLowerCase())}`);
     setLoading(true);
@@ -122,7 +123,6 @@ function HomeContent() {
     router.push("/");
   };
 
-  // Open and close modal functions.
   const openModal = (type: "privacy" | "terms") => {
     setModalType(type);
   };
@@ -134,7 +134,6 @@ function HomeContent() {
     <div className="min-h-screen flex flex-col bg-gradient-to-br from-purple-100 to-pink-100">
       <Header isLoggedIn={isLoggedIn} handleLogout={handleLogout} />
 
-      {/* Homepage content that blurs when modal is open */}
       <div className={`flex-grow ${modalType ? "filter blur-sm" : ""}`}>
         <section className="flex flex-col items-center justify-center text-center mt-20 px-6">
           <h2 className="text-[2.25rem] sm:text-5xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-purple-600 to-pink-600 cursor-pointer">
@@ -162,7 +161,6 @@ function HomeContent() {
 
       <Footer openModal={openModal} />
 
-      {/* Conditionally render the modal */}
       {modalType && (
         <Modal onClose={closeModal}>
           {modalType === "privacy" && <PrivacyModalContent />}
