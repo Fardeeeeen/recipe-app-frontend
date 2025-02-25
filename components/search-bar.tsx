@@ -1,8 +1,8 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Search } from "lucide-react";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 
 interface SearchBarProps {
   setSearchResults: (results: any[]) => void;
@@ -14,6 +14,13 @@ export function SearchBar({ setSearchResults, setSearchMessage }: SearchBarProps
   const [errorMessage, setErrorMessage] = useState("");
   const [loading, setLoading] = useState(false);
   const router = useRouter();
+  const searchParams = useSearchParams();
+
+  // On component mount, check if there's a "q" parameter in the URL and set it as the query
+  useEffect(() => {
+    const initialQuery = searchParams.get("q") || "";
+    setQuery(initialQuery);
+  }, [searchParams]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();

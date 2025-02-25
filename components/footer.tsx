@@ -1,6 +1,6 @@
 "use client";
 
-import { useModal } from "@/components/GlobalModalProvider";
+import { useModal } from "./GlobalModalProvider";
 
 const Footer = () => {
   const { openModal } = useModal();

@@ -18,9 +18,11 @@ interface Recipe {
 interface RecipeGridProps {
   recipes: Recipe[];
   showHeading?: boolean;
+ 
+  heading?: string;
 }
 
-export function RecipeGrid({ recipes, showHeading = true }: RecipeGridProps) {
+export function RecipeGrid({ recipes, showHeading = true, heading }: RecipeGridProps) {
   const router = useRouter();
   const user_id =
     typeof window !== "undefined" ? localStorage.getItem("user_id") : null;
@@ -31,7 +33,7 @@ export function RecipeGrid({ recipes, showHeading = true }: RecipeGridProps) {
     typeof window !== "undefined" && !!localStorage.getItem("token")
   );
 
-  // If the user was initially logged in, check periodically for logout.
+  // Check periodically for logout if initially logged in.
   useEffect(() => {
     let intervalId: NodeJS.Timeout;
     if (initialLoggedIn) {
@@ -171,9 +173,9 @@ export function RecipeGrid({ recipes, showHeading = true }: RecipeGridProps) {
   return (
     <div>
       {showHeading && (
-        <div className="flex justify-between items-center mb-4">
-          <h2 className="text-l sm:text-3xl font-bold text-gray-800">
-            Here are the best Recipes for you
+        <div className="flex justify-between items-center mb-4 " style={{ margin:"20px"}}>
+          <h2 className="text-sm sm:text-xl font-bold text-gray-800 border border-purple-500 bg-purple-500 bg-opacity-20 p-2 rounded">
+            {heading ? heading : "Here are the best recipes for you"}
           </h2>
           <button
             onClick={() => {

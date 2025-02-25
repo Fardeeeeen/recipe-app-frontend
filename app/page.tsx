@@ -1,6 +1,5 @@
 "use client";
 
-
 export const dynamic = "force-dynamic";
 
 import { Suspense, useState, useEffect } from "react";
@@ -148,7 +147,8 @@ function HomeContent() {
         </section>
         <main className="max-w-xl md:max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 relative z-10 flex-grow">
           {searchResults.length > 0 ? (
-            <RecipeGrid recipes={searchResults} />
+            // Pass the backend message as the heading
+            <RecipeGrid recipes={searchResults} heading={searchMessage} />
           ) : loading ? (
             <Loader />
           ) : error ? (

@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
 import './globals.css'
+import GlobalModalProvider from '@/components/GlobalModalProvider'
 
 export const metadata: Metadata = {
   title: 'Dessert Recipes App',
@@ -9,12 +10,16 @@ export const metadata: Metadata = {
 
 export default function RootLayout({
   children,
-}: Readonly<{
+}: {
   children: React.ReactNode
-}>) {
+}) {
   return (
     <html lang="en">
-      <body>{children}</body>
+      <body>
+        <GlobalModalProvider>
+          {children}
+        </GlobalModalProvider>
+      </body>
     </html>
   )
 }

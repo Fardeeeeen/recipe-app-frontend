@@ -13,7 +13,6 @@ const contactImages = [
   "Brownie",
   "Cake",
   "Churro",
-  "Cookie",
 ];
 
 export default function ContactPage() {
@@ -53,13 +52,9 @@ export default function ContactPage() {
     setLoading(true);
     setFeedback("");
     try {
-      const response = await fetch("/api/contact", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(formData),
-      });
-      const data = await response.json();
-      if (!response.ok) throw new Error(data.message || "Submission failed");
+      // Simulate a short delay if needed (optional)
+      await new Promise((resolve) => setTimeout(resolve, 500));
+      
       setFeedback("Thank you for contacting us! We will get back to you soon.");
       setFormData({ name: "", email: "", subject: "", message: "" });
     } catch (error: any) {
@@ -148,7 +143,10 @@ export default function ContactPage() {
                     initial={{ opacity: 0, y: -50, scale: 0.9 }}
                     animate={{ opacity: 1, y: 0, scale: 1 }}
                     transition={{ duration: 0.6, delay: index * 0.3 }}
-                    whileHover={{ scale: 1.05 }}
+                    whileHover={{ 
+                      scale: 1.05, 
+                      transition: { duration: 0.2, ease: "easeInOut" } 
+                    }}
                   />
                 );
               })}
@@ -292,7 +290,7 @@ export default function ContactPage() {
                 />
               </div>
               {feedback && (
-                <p className="text-center text-lg text-green-600">{feedback}</p>
+                <p className="text-center text-lg text-purple-500">{feedback}</p>
               )}
               <div className="text-center">
                 <button

@@ -174,7 +174,8 @@ export default function Favorites() {
                       {recipe.name}
                     </h3>
                     <button onClick={(e) => handleRemoveFavorite(recipe.id, e)} className="focus:outline-none">
-                      <Heart className="text-pink-500 h-6 w-6" />
+                      {/* Updated Heart Icon: Filled with red color */}
+                      <Heart className="h-6 w-6 fill-red-500" stroke="none" />
                     </button>
                   </div>
                 </div>
@@ -188,7 +189,6 @@ export default function Favorites() {
           </Link>
         </div>
       </div>
-      {/* Footer component */}
       <Footer />
     </div>
   );
