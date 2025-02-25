@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { Suspense, useState, useEffect } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import Header from "@/components/header";
 import { SearchBar } from "@/components/search-bar";
@@ -21,7 +21,7 @@ interface Recipe {
   category?: string;
 }
 
-export default function Home() {
+function HomeContent() {
   const [recipes, setRecipes] = useState<Recipe[]>([]);
   const [searchResults, setSearchResults] = useState<Recipe[]>([]);
   const [searchMessage, setSearchMessage] = useState("");
@@ -71,7 +71,6 @@ export default function Home() {
 
   // Callback for free-text search.
   const handleSearch = async (query: string) => {
-    // Update URL with the search query.
     router.push(`/?q=${encodeURIComponent(query)}`);
     setLoading(true);
     try {
@@ -93,9 +92,8 @@ export default function Home() {
     }
   };
 
-  // Callback: when a category is selected.
+  // Callback when a category is selected.
   const handleCategorySelect = async (category: string) => {
-    // Update URL with the category query parameter.
     router.push(`/?category=${encodeURIComponent(category.toLowerCase())}`);
     setLoading(true);
     try {
@@ -138,17 +136,17 @@ export default function Home() {
 
       {/* Homepage content that blurs when modal is open */}
       <div className={`flex-grow ${modalType ? "filter blur-sm" : ""}`}>
-      <section className="flex flex-col items-center justify-center text-center mt-20 px-6">
-        <h2 className="text-[2.25rem] sm:text-5xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-purple-600 to-pink-600 cursor-pointer">
-          Find the Perfect Dessert Recipe
-        </h2>
-        <p className="text-[0.8rem] sm:text-base text-gray-600 mt-3 max-w-2xl">
-          Search from a variety of delicious dessert recipes, just by giving us the ingredients you have.
-        </p>
-        <div className="mt-6 w-full max-w-2xl">
-          <SearchBar setSearchResults={setSearchResults} setSearchMessage={setSearchMessage} />
-    </div>
-      </section>
+        <section className="flex flex-col items-center justify-center text-center mt-20 px-6">
+          <h2 className="text-[2.25rem] sm:text-5xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-purple-600 to-pink-600 cursor-pointer">
+            Find the Perfect Dessert Recipe
+          </h2>
+          <p className="text-[0.8rem] sm:text-base text-gray-600 mt-3 max-w-2xl">
+            Search from a variety of delicious dessert recipes, just by giving us the ingredients you have.
+          </p>
+          <div className="mt-6 w-full max-w-2xl">
+            <SearchBar setSearchResults={setSearchResults} setSearchMessage={setSearchMessage} />
+          </div>
+        </section>
         <main className="max-w-xl md:max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 relative z-10 flex-grow">
           {searchResults.length > 0 ? (
             <RecipeGrid recipes={searchResults} />
@@ -172,5 +170,13 @@ export default function Home() {
         </Modal>
       )}
     </div>
+  );
+}
+
+export default function Home() {
+  return (
+    <Suspense fallback={<Loader />}>
+      <HomeContent />
+    </Suspense>
   );
 }

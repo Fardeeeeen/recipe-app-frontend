@@ -1,10 +1,10 @@
 "use client";
 
-import { useState } from "react";
+import { Suspense, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import Link from "next/link";
 
-export default function ResetPassword() {
+function ResetPasswordContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const token = searchParams.get("token");
@@ -76,10 +76,22 @@ export default function ResetPassword() {
           </button>
         </form>
         <div className="mt-4 flex justify-between items-center">
-          <Link href="/login" className="text-blue-500 hover:text-blue-600">Back to Login</Link>
-          <Link href="/" className="text-purple-500 hover:text-purple-600">Back to Home</Link>
+          <Link href="/login" className="text-blue-500 hover:text-blue-600">
+            Back to Login
+          </Link>
+          <Link href="/" className="text-purple-500 hover:text-purple-600">
+            Back to Home
+          </Link>
         </div>
       </div>
     </div>
+  );
+}
+
+export default function ResetPassword() {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <ResetPasswordContent />
+    </Suspense>
   );
 }
